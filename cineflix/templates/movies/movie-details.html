@@ -6,7 +6,10 @@
   <section class="hero-section" style="background: url('{{movie.photo.url}}') center center/cover no-repeat;">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="display-5 fw-bold">{{ movie.name }}</h1>
+      
+      <h1 class="display-5 fw-bold d-inline-block me-3">{{ movie.name }}</h1>
+      <a href="{% url 'movie-edit' movie.uuid %}"><i class="fa fa-solid fa-pen text-white mx-2"></i></a>
+      <a href="{% url 'movie-delete' movie.uuid %}"><i class="fa fa-solid fa-trash text-white mx-2"></i></a>
       <div class="d-flex align-items-center mb-2">
         <span class="match me-3">{{ movie.runtime | time:'H i' }}</span>
         <span class="me-3">{{ movie.release_date|date:'Y' }}</span>

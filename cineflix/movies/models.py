@@ -77,39 +77,101 @@ class LanguagesChoices(models.TextChoices):
 
     KANNADA = 'Kannada','Kannada'
 
+class Industry(BaseClass):
+
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        
+        verbose_name = 'Industries'
+
+        verbose_name_plural = 'Industries'
+        
+    def __str__(self):
+        
+            return f'{self.name}'
+    
+class Genre(BaseClass):
+     
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        
+        verbose_name = 'Genre'
+
+        verbose_name_plural = 'Genre'
+        
+    def __str__(self):
+        
+            return f'{self.name}'
+    
+class Artist(BaseClass):
+     
+    name = models.CharField(max_length=50)
+
+    dob = models.DateField
+
+    description = models.TextField()
+
+    class Meta:
+        
+        verbose_name = 'Artists'
+
+        verbose_name_plural = 'Artists'
+        
+    def __str__(self):
+        
+            return f'{self.name}'
+    
+class Language(BaseClass):
+     
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        
+        verbose_name = 'Langugaes'
+
+        verbose_name_plural = 'Languages'
+        
+    def __str__(self):
+        
+            return f'{self.name}'
+
 class Movie(BaseClass):
 
-     name=models.CharField(max_length=30)
+    name=models.CharField(max_length=30)
 
-     photo = models.ImageField(upload_to='movies/banner-images')
+    photo = models.ImageField(upload_to='movies/banner-images')
 
-     description = models.TextField()
+    description = models.TextField()
 
-     release_date=models.DateField()
+    release_date=models.DateField()
 
-     industry=models.CharField(max_length=20,choices=IndustryChoices.choices)    
+    industry=models.ForeignKey('Industry',on_delete=models.CASCADE)   
 
-     runtime=models.TimeField()
+    runtime=models.TimeField()
 
-     certification=models.CharField(max_length=5,choices=CerificationChoices.choices)  
+    certification=models.CharField(max_length=5,choices=CerificationChoices.choices)  
      
-     genre = MultiSelectField(choices=GenreChoices.choices)
+    genre = models.ManyToManyField('Genre')
 
-     artists = MultiSelectField(choices=ArtistsChoices.choices)
+    artists = models.ManyToManyField('Artist')
 
-     video = EmbedVideoField()
+    video = EmbedVideoField()
 
-     tags = models.TextField()
+    tags = models.TextField()
 
-     languages = MultiSelectField(choices=LanguagesChoices.choices)
+    # languages = MultiSelectField(choices=LanguagesChoices.choices)
+
+    languages = models.ManyToManyField('Language')
      
-     class Meta:
+    class Meta:
         
         verbose_name = 'Movies'
 
         verbose_name_plural = 'Movies'
         
-        def __str__(self):
+    def __str__(self):
         
             return f'{self.name}'
     

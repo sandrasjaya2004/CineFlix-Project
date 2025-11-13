@@ -18,13 +18,13 @@ class HomeView(View):
 
         return render(request,self.template,context=data)
     
-class MovieView(View):
+class MovieListView(View):
 
     template = 'movies/movie-list.html'
 
     def get(self,request,*args,**kwargs):
 
-        movies = Movie.objects.all()
+        movies = Movie.objects.filter(active_status=True)
 
         data = {'page':'Movies','movies':movies}
 
@@ -159,4 +159,59 @@ class MovieDetailsView(View):
         data = {'movie':movie,'page':movie.name}
         
         return render(request,self.template,context=data)
+    
+class MovieEditView(View):
+
+    form_class = MovieForm
+
+    template = 'movies/movie-edit.html'
+
+    def get(self,request,*args,**kwargs):
+
+        uuid = kwargs.get('uuid')
+
+        movie = Movie.objects.get(uuid=uuid)
+
+        form = self.form_class(instance=movie)
+
+        data = {'form':form,'page': movie.name}
+
+        return render(request,self.template,context=data)
+    
+    def post(self,request,*args,**kwargs):
+
+        uuid = kwargs.get('uuid')
+
+        movie = Movie.objects.get(uuid=uuid)
+
+        form = self.form_class(request.POST,request.FILES,instance=movie)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect('movie-details',uuid=uuid)
+        
+        data = {'form':form,'page':movie.name}
+
+        return render(request,self.template,context=data)
+    
+class MovieDeleteView(View):
+
+    def get(self,request,*args,**kwargs):
+
+        uuid = kwargs.get('uuid')
+
+        movie = Movie.objects.get(uuid=uuid)
+
+        # harde delete
+        # movie.delete()
+        # soft delete
+        movie.active_status = False
+
+        movie.save()
+
+        return redirect('movie-list')
+        
+
 
