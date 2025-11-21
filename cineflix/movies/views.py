@@ -6,6 +6,8 @@ from . models import Movie,IndustryChoices,GenreChoices,ArtistsChoices,Languages
 
 from .forms import MovieForm
 
+from django.db.models import Q
+
 # Create your views here.
 
 class HomeView(View):
@@ -24,9 +26,23 @@ class MovieListView(View):
 
     def get(self,request,*args,**kwargs):
 
+        query = request.GET.get('query')
+
         movies = Movie.objects.filter(active_status=True)
 
-        data = {'page':'Movies','movies':movies}
+        if query :
+
+            movies = movies.filter(Q(name__icontains=query)|
+                                   Q(description__icontains=query)|
+                                   Q(industry__name__icontains=query)|
+                                   Q(certification__icontains=query)|
+                                   Q(genre__name__icontains=query)|
+                                   Q(artists__name__icontains=query)|
+                                   Q(languages__name__icontains=query)|
+                                   Q(tags__icontains=query)
+                                   ).distinct()
+
+        data = {'page':'Movies','movies':movies,'query':query}
 
         return render(request,self.template,context=data) 
     

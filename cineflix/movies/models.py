@@ -109,7 +109,7 @@ class Artist(BaseClass):
      
     name = models.CharField(max_length=50)
 
-    dob = models.DateField
+    dob = models.DateField()
 
     description = models.TextField()
 

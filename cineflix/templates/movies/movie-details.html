@@ -14,7 +14,7 @@
         <span class="match me-3">{{ movie.runtime | time:'H i' }}</span>
         <span class="me-3">{{ movie.release_date|date:'Y' }}</span>
         <span class="badge bg-dark me-3 px-3 py-1">{{ movie.certification }}</span>
-        <span>{{ movie.industry }}</span>
+        <span>{{ movie.industry.name }}</span>
       </div>
       <p class="text-light mb-3">
         {{ movie.description }}
@@ -26,9 +26,9 @@
         
       </div>
 
-      <p><strong>Starring:</strong> {% for artist in movie.artists %} {{artist}} {% endfor %}</p>
-      <p><strong>Genres:</strong> {% for gen in movie.genre %} {{gen}} {% endfor %} </p>
-      <p><strong>Available in :</strong>{% for language in movie.languages %} {{ language }} {% endfor %} </p>
+      <p><strong>Starring:</strong> {% for artist in movie.artists.all %} {{artist.name}} {% endfor %}</p>
+      <p><strong>Genres:</strong> {% for gen in movie.genre.all %} {{gen.name}} {% endfor %} </p>
+      <p><strong>Available in :</strong>{% for language in movie.languages.all %} {{ language.name }} {% endfor %} </p>
     </div>
   </section>
 
