@@ -2,6 +2,8 @@ from django import forms
 
 from . models import Profile
 
+from re import fullmatch
+
 class LoginForm(forms.Form):
 
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control','required':'required'})) 
@@ -25,7 +27,27 @@ class SignUpForm(forms.ModelForm):
 
         }
 
-            
+class AddphoneForm(forms.Form):
+
+    phone = forms.CharField(max_length=14,widget=forms.TextInput(attrs={'class':'form-control'}))
+
+    def clean(self):
+
+        cleaned_data =  super().clean()
+
+        phone = cleaned_data.get('phone')
+
+        pattern = '(+?91)?\\s\\d?{10}'
+
+        valid = fullmatch(pattern,phone)
+
+        if not valid:
+
+            self.add_error('phone','Invalid Phone Number')
+
+        if Profile.objects.filter(phone=phone).exists():
+
+            self.add_error('phone','This Phone Number is Already Registered')
         
         
         
