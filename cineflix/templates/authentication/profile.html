@@ -4,7 +4,11 @@
 
 <section class="container my-4">
   <div class="card p-4 shadow-sm">
-    <h4 class="mb-3">Profile Details</h4>
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-3">Profile Details</h4>
+        <a href="{% url 'password-otp' %}" class="btn btn-outline-primary btn-rounded">Change Password</a>
+    </div>
+    
     <div class="row mb-2">
       <div class="col-md-4 fw-bold">Name:</div>
       <div class="col-md-8">{{user.first_name}} {{user.last_name}}</div>
@@ -15,7 +19,7 @@
     </div>
     <div class="row mb-3">
       <div class="col-md-4 fw-bold">Phone Number:</div>
-      <div class="col-md-8">{% if  user.phone%} {{user.phone}} {% endif %} {% if not user.phone%} <span class="mx-4"><a href="{% url 'add-phone' %}"><i class="fa fa-plus"></i>Add</a></span>{% endif %}</div>
+      <div class="col-md-8">{% if  user.phone and user.phone_verified %} {{user.phone}} {% endif %} {% if not user.phone %} <span class="mx-4"><a href="{% url 'add-phone' %}"><i class="fa fa-plus"></i>Add</a></span>{% endif %}</div>
     </div>
   </div>
 </section>

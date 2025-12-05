@@ -18,6 +18,8 @@ class Profile(AbstractUser):
 
     phone = models.CharField(null=True,blank=True)
 
+    phone_verified = models.BooleanField(default=False)
+
     class Meta:
         
         verbose_name = 'Profiles'
@@ -34,6 +36,10 @@ class OTP(BaseClass):
     profile = models.OneToOneField('Profile',on_delete=models.CASCADE)
 
     otp = models.CharField(max_length=4)
+
+    email_otp = models.CharField(max_length=4)
+
+    email_otp_verified = models.BooleanField(default=False)
 
     class Meta:
         

@@ -8,6 +8,10 @@ from .forms import MovieForm
 
 from django.db.models import Q
 
+from django.utils.decorators import method_decorator
+
+from authentication.permissions import permitted_user_roles
+
 # Create your views here.
 
 class HomeView(View):
@@ -115,7 +119,7 @@ class MovieListView(View):
 #                              languages=languages)
 
 #         return redirect('movie-list')
-    
+@method_decorator(permitted_user_roles(['Admin']),name='dispatch')
 class MovieCreateView(View):
 
     form_class = MovieForm
@@ -175,7 +179,7 @@ class MovieDetailsView(View):
         data = {'movie':movie,'page':movie.name}
         
         return render(request,self.template,context=data)
-    
+@method_decorator(permitted_user_roles(['Admin']),name='dispatch')  
 class MovieEditView(View):
 
     form_class = MovieForm

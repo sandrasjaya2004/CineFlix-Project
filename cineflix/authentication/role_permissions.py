@@ -1,0 +1,27 @@
+from  django.template import Library
+
+register = Library()
+
+
+# @register.simple_tag
+# def display_message(msg):
+
+#     return f'message is {msg}'
+
+
+# @register.simple_tag
+# def sum(num1,num2):
+
+#     return f'sum is {num1+num2}'
+
+@register.simple_tag
+def allowed_roles(request,roles):
+
+    roles = eval(roles)
+
+    if request.user.is_authenticated and request.user.role in roles:
+
+        return True
+    
+    return False
+

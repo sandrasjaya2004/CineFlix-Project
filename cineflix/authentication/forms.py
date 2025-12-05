@@ -27,6 +27,16 @@ class SignUpForm(forms.ModelForm):
 
         }
 
+    def clean(self):
+
+        cleaned_data =  super().clean()
+
+        email = cleaned_data.get('email')
+
+        if Profile.objects.filter(username=email).exists():
+
+            self.add_error('email','This email is Already Registered')
+
 class AddphoneForm(forms.Form):
 
     phone = forms.CharField(max_length=14,widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -37,7 +47,7 @@ class AddphoneForm(forms.Form):
 
         phone = cleaned_data.get('phone')
 
-        pattern = '(+?91)?\\s\\d?{10}'
+        pattern = '(\\+?91)?\\s?[6-9]\\d{9}'
 
         valid = fullmatch(pattern,phone)
 
@@ -49,7 +59,29 @@ class AddphoneForm(forms.Form):
 
             self.add_error('phone','This Phone Number is Already Registered')
         
-        
+class OTPForm(forms.Form):
+
+    otp = forms.CharField(max_length=4,widget=forms.TextInput(attrs={'class':'form-control'}))
+
+ 
         
 
-        
+class ChangePasswordForm(forms.Form):
+
+    new_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+    def clean(self):
+
+        cleaned_data = super().clean()
+
+        new_password = cleaned_data.get('new_password')
+
+        confirm_password = cleaned_data.get('confirm_password')
+
+
+
+        if new_password != confirm_password :
+
+            self.add_error('confirm_password','password does not match')
