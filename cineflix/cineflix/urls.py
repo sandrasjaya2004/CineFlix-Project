@@ -27,6 +27,10 @@ urlpatterns = [
     path('',include('movies.urls')),
 
     path('',include('authentication.urls')),
+
+    path('',include('subscriptions.urls')),
+
+    path('',include('payments.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

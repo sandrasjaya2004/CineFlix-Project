@@ -1,5 +1,7 @@
 from  django.template import Library
 
+from subscriptions.models import UserSubscriptions
+
 register = Library()
 
 
@@ -24,4 +26,19 @@ def allowed_roles(request,roles):
         return True
     
     return False
+
+@register.simple_tag
+def active_subscription_plan(request):
+
+    if request.user.is_authenticated and request.user.role == 'User':
+
+        user = request.user
+
+        plan = UserSubscriptions.objects.filter(profile=user,active=True).latest('created_at')
+
+        return plan
+    
+    return None
+
+
 

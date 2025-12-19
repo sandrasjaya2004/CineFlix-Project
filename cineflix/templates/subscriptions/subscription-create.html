@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block section %}
+
+<section id="create-movie" class="py-5 my-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-header bg-primary text-white text-center py-3">
+            <h3 class="mb-0"> Create Subscription Plan</h3>
+          </div>
+
+          <div class="card-body p-4">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              
+              <div class="mb-3">
+                <label for="name" class="form-label fw-bold">Plan Name</label>
+               
+                 {{form.name}}
+                 {% if form.name.errors %}
+                 <p class="text-danger small">{{form.name.errors.0}}</p>
+                 {% endif %}
+              </div>
+
+              <div class="mb-3">
+                <label for="photo" class="form-label fw-bold">Amount</label>
+               
+                 {{form.amount}}
+                 {% if form.amount.errors %}
+                 <p class="text-danger small">{{form.amount.errors.0}}</p>
+                 {% endif %}
+              </div>
+
+
+                <div class="col-md-4 mb-3">
+                  <label for="certification" class="form-label fw-bold">Supported Devices</label>
+                  
+                   {{form.devices}}
+                   {% if form.devices.errors %}
+                 <p class="text-danger small">{{form.devices.errors.0}}</p>
+                 {% endif %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="industry" class="form-label fw-bold">Streaming Quality</label>
+                  
+                   {{form.quality}}
+                   {% if form.quality.errors %}
+                 <p class="text-danger small">{{form.quality.errors.0}}</p>
+                 {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="languages" class="form-label fw-bold">No.of Screens</label>
+                 
+                   {{form.no_of_screens}}
+                   {% if form.no_of_screenserrors %}
+                 <p class="text-danger small">{{form.no_of_screens.errors.0}}</p>
+                 {% endif %}
+                 
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="genre" class="form-label fw-bold">Download Devices</label>
+                  
+                   {{form.download_devices}}
+                   {% if form.download_devices.errors %}
+                 <p class="text-danger small">{{form.download_devices.errors.0}}</p>
+                 {% endif %}
+                </div>
+                
+
+              <div class="d-flex justify-content-end mt-4 btn-wrap">
+                <button type="submit" class="btn btn-outline-accent btn-accent-arrow">
+                  Save Plan<i class="icon icon-ns-arrow-right"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

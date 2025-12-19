@@ -12,6 +12,8 @@ from django.utils.decorators import method_decorator
 
 from authentication.permissions import permitted_user_roles
 
+from cineflix.utils import get_recommended_movies
+
 # Create your views here.
 
 class HomeView(View):
@@ -176,9 +178,12 @@ class MovieDetailsView(View):
 
         movie = Movie.objects.get(uuid=uuid)
 
-        data = {'movie':movie,'page':movie.name}
+        recommended_movies = get_recommended_movies(movie)
+
+        data = {'movie':movie,'page':movie.name,'recommended_movies':recommended_movies}
         
         return render(request,self.template,context=data)
+    
 @method_decorator(permitted_user_roles(['Admin']),name='dispatch')  
 class MovieEditView(View):
 

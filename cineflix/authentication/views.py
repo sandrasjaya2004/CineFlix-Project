@@ -64,7 +64,7 @@ class LoginView(View):
 
         return render(request,self.template,context=data)
 
-@method_decorator(permitted_user_roles(['Admin']),name='dispatch')
+
 class LogoutView(View):
 
     def get(self,request,*args,**kwargs):
@@ -124,6 +124,7 @@ class SignUpView(View):
         data = {'form':form}
 
         return render(request,self.template,context=data)
+    
 @method_decorator(permitted_user_roles(['User','Admin']),name='dispatch')
 class ProfileView(View):
 
@@ -132,8 +133,8 @@ class ProfileView(View):
     def get(self,request,*args,**kwargs):
 
         return render(request,self.template)
+    
 @method_decorator(permitted_user_roles(['User']),name='dispatch')   
-
 class AddPhoneView(View):
 
     template = 'authentication/phone.html'
