@@ -30,15 +30,21 @@ def allowed_roles(request,roles):
 @register.simple_tag
 def active_subscription_plan(request):
 
+    plan = None
+
     if request.user.is_authenticated and request.user.role == 'User':
 
         user = request.user
 
-        plan = UserSubscriptions.objects.filter(profile=user,active=True).latest('created_at')
-
-        return plan
+        try :
+            
+            plan = UserSubscriptions.objects.filter(profile=user,active=True).latest('created_at')
+        
+        except:
     
-    return None
+            pass
+    
+    return plan
 
 
 

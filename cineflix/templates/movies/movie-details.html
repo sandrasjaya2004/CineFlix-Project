@@ -25,7 +25,7 @@
       </p>
 
       <div class="d-flex gap-2 mb-3">
-        <button class="btn btn-white text-dark rounded-pill" style="width: 150px;"><i class="fa-solid fa-play me-2"></i>Play</button>
+        <a href="{% url 'movie-play' movie.uuid %}" class="btn btn-white text-dark rounded-pill" style="width: 150px;"><i class="fa-solid fa-play me-2"></i>Play</a>
         <button class="btn bg-dark btn-outline-light rounded-pill" style="width: 150px;"><i class="fa-solid fa-plus me-2"></i>My List</button>
         
       </div>
